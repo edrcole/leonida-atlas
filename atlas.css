@@ -81,3 +81,5 @@ header:has(#languageMenu[open]){z-index:15}
 .languageOptions button{display:block;width:100%;text-align:left;border-radius:12px;padding:7px 12px}
 .languageOptions button[aria-pressed=true],.languageOptions button:hover{background:#e38d9b44}
 @media(max-width:420px){header{gap:4px}header nav{position:static;transform:none;margin-inline:auto}.headerActions{gap:3px;margin:0}#languageMenu summary{padding:6px}}
+
+.footerLinks{display:flex;align-items:center;justify-content:flex-end;gap:4px 12px;flex-wrap:wrap}footer{flex-wrap:wrap;gap:4px 10px}
