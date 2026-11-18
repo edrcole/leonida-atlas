@@ -1,4 +1,4 @@
-/* Yanis V17 coordinates are measured in original image pixels (north-up). */
+/* World coordinates are in game units, with north up. GTADB V18 uses a 32768-unit square centered on zero. */
 window.AtlasMap = (() => {
   const W = 14550, H = 20000, WEST = -10550, NORTH = 11000;
   const palettes = {landmark:'#ff7e9c', enterable:'#76e0be', shop:'#deb1ff', transit:'#70d9fc', nightlife:'#e78ffa', hotel:'#ff9d81', trailer:'#ffbd78', screenshot:'#ffcf78', leak:'#f990ad'};
@@ -87,45 +87,46 @@ window.AtlasMap = (() => {
         pumpTiles();
       };
       img.onload=complete;img.onerror=complete;
-      img.src='https://map.stateofleonida.net/tiles/YANIS/v17/nocams/'+key+'.png';
+      const [z,x,y]=key.split('/');
+      img.src='https://raw.githubusercontent.com/rolux/gtadb.org/4aa9df1e6758a3787de84c893dcd2e299e0c268c/maps/tiles/6/yanis,18/'+z+'/'+z+','+y+','+x+'.jpg';
     }
     if(tiles.size>180)for(const [key,img] of tiles){
       if(!wantedTiles.has(key)&&img.complete)tiles.delete(key);
       if(tiles.size<=140)break;
     }
   }
-  function planTiles(style,z,x1,y1,x2,y2){
-    const plan=[style,z,x1,y1,x2,y2].join('/');
+  function planTiles(z,x1,y1,x2,y2){
+    const plan=[z,x1,y1,x2,y2].join('/');
     if(plan===tilePlanKey)return;
     tilePlanKey=plan;wantedTiles=new Set();const queue=[];
     const mx=(x1+x2)*.5,my=(y1+y2)*.5;
     for(let x=x1;x<=x2;x++)for(let y=y1;y<=y2;y++){
-      const key=style+'/'+z+'/'+x+'/'+y;wantedTiles.add(key);
+      const key=z+'/'+x+'/'+y;wantedTiles.add(key);
       if(!tiles.has(key))queue.push({key,d:(x-mx)**2+(y-my)**2});
     }
     tileQueue=queue.sort((a,b)=>a.d-b.d).map(item=>item.key);pumpTiles();
   }
   function terrain(ctx){
-    const mode=theme==='night'?'night':'day', origin=view(0,0);
-    const base=images['map-'+mode];
+    const origin=view(0,0);
+    const base=images.overview;
     if(base?.naturalWidth){
       // Crop before scaling so that deep zoom never stretches a full-island texture.
       const a=world(0,0),b=world(width,height),x=clamp(a.x,0,W),y=clamp(a.y,0,H);
       const w=Math.min(b.x,W)-x,h=Math.min(b.y,H)-y;
       if(w>0&&h>0){const dst=view(x,y);ctx.drawImage(base,x/W*base.naturalWidth,y/H*base.naturalHeight,w/W*base.naturalWidth,h/H*base.naturalHeight,dst.x,dst.y,w*scale(),h*scale());}
     }
-    const z=clamp(Math.ceil(6+Math.log2(scale()*ratio)),3,6);
-    if(z<=3){if(tilePlanKey){tilePlanKey='';wantedTiles.clear();tileQueue=[];}return;} // The bundled overview is a complete mosaic of native zoom 3.
-    const edge=256*2**(6-z);
+    const z=clamp(Math.ceil(5+Math.log2(scale()*ratio)),2,5);
+    if(z===2&&base?.naturalWidth){tilePlanKey='';wantedTiles.clear();tileQueue=[];return;}
+    const edge=256*2**(5-z);
+    const offsetX=16384+WEST, offsetY=16384-NORTH;
     const tl=world(0,0),br=world(width,height);
-    const x1=Math.max(0,Math.floor((6450+Math.max(tl.x,0))/edge)),y1=Math.max(0,Math.floor(tl.y/edge));
-    const x2=Math.floor((6450+Math.min(W-1,br.x))/edge),y2=Math.floor(Math.min(H-1,br.y)/edge);
-    const style=theme==='night'?'dark':'normal';
-    if(!animation)planTiles(style,z,x1,y1,x2,y2);
+    const x1=Math.floor((offsetX+Math.max(tl.x,0))/edge),y1=Math.floor((offsetY+Math.max(tl.y,0))/edge);
+    const x2=Math.floor((offsetX+Math.min(W-1,br.x))/edge),y2=Math.floor((offsetY+Math.min(H-1,br.y))/edge);
+    if(!animation)planTiles(z,x1,y1,x2,y2);
     ctx.save();ctx.beginPath();ctx.rect(origin.x,origin.y,W*scale(),H*scale());ctx.clip();
     for(let x=x1;x<=x2;x++)for(let y=y1;y<=y2;y++){
-      const img=tiles.get(style+'/'+z+'/'+x+'/'+y);if(!img?.naturalWidth)continue;
-      const p=view(x*edge-6450,y*edge);ctx.drawImage(img,p.x,p.y,edge*scale()+.3,edge*scale()+.3);
+      const img=tiles.get(z+'/'+x+'/'+y);if(!img?.naturalWidth)continue;
+      const p=view(x*edge-offsetX,y*edge-offsetY);ctx.drawImage(img,p.x,p.y,edge*scale()+.3,edge*scale()+.3);
     }
     ctx.restore();
   }
@@ -344,6 +345,7 @@ window.AtlasMap = (() => {
     if(key!==terrainKey){
       terrainKey=key;const base=terrainContext;base.setTransform(ratio,0,0,ratio,0,0);
       base.imageSmoothingEnabled=true;base.imageSmoothingQuality=animation||fingers.size?'low':'medium';
+      terrainCanvas.style.filter=theme==='night'?'brightness(.56) saturate(.74) hue-rotate(12deg)':'';
       backdrop(base);terrain(base);
       base.fillStyle=theme==='night'?'rgba(90,52,127,.24)':'rgba(239,160,118,.07)';base.fillRect(0,0,width,height);
     }
@@ -422,7 +424,7 @@ window.AtlasMap = (() => {
       terrainCanvas=document.createElement('canvas');terrainCanvas.setAttribute('aria-hidden','true');
       terrainCanvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;display:block;';
       host.prepend(terrainCanvas,canvas);terrainContext=terrainCanvas.getContext('2d',{alpha:false});ctx=canvas.getContext('2d');attach();ro=new ResizeObserver(resize);ro.observe(host);
-      for(const mode of ['day','night'])preload('map-'+mode,'assets/map-'+mode+'.webp');
+      preload('overview','assets/yanis-v18.webp');
       districts=buildDistricts(window.VICE_ATLAS_SPOTS||[]);
       resize();
     },
