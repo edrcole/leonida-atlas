@@ -161,6 +161,20 @@ function openExplorer(){
   hideDrawer();$('mapframe').append(panel);panel.classList.add('floatingPanel');
 }
 $('mobileSearch').onclick=()=>{if($('mapframe').classList.contains('expanded')){openExplorer();return}stopTool();window.fromLens=true;exploring=true;selected=null;list();$('query').focus({preventScroll:true})};
+const privacyButton = document.createElement('button');
+privacyButton.type = 'button';
+privacyButton.textContent = atlasText('Privacy e cookie', 'Privacy and cookies');
+privacyButton.setAttribute('aria-haspopup', 'dialog');
+privacyButton.onclick = () => modal(privacyButton.textContent, atlasText(
+  '<p><strong>Sul tuo dispositivo</strong><br>Il browser ricorda preferiti, luoghi trovati, spot personali, lingua e stile della mappa. Le ricerche filtrano gli spot mentre scrivi. Puoi cancellare i salvataggi eliminando i dati di questo sito nel browser.</p><p><strong>Quando apri la mappa</strong><br>GitHub Pages ospita il sito e registra l’indirizzo IP per sicurezza. Se la lingua è da determinare, country.is riceve l’IP per stimare il Paese. Il browser conserva il codice del Paese per la sessione.</p><p><strong>Mappe e foto</strong><br>Per mostrare l’area che esplori, il browser richiede le immagini della mappa a map.stateofleonida.net. Quando carica foto esterne, contatta anche i rispettivi fornitori. Questi servizi ricevono l’indirizzo IP e la richiesta dell’immagine.</p>',
+  '<p><strong>On your device</strong><br>Your browser remembers favorites, found locations, personal spots, language and map style. Searches filter locations as you type. You can erase your saved choices by clearing this site’s data in your browser.</p><p><strong>When you open the map</strong><br>GitHub Pages hosts the site and logs IP addresses for security. When the language needs to be determined, country.is receives your IP address to estimate your country. Your browser keeps the country code for the session.</p><p><strong>Maps and photos</strong><br>To show the area you explore, your browser requests map images from map.stateofleonida.net. When it loads external photos it also contacts their providers. These services receive your IP address and the image request.</p>'
+));
+const footerLinks = document.createElement('div');
+footerLinks.className = 'footerLinks';
+const creditsButton = $('credits');
+creditsButton.replaceWith(footerLinks);
+footerLinks.append(creditsButton, privacyButton);
+
 $('closeModal').onclick=()=>$('modal').close();$('info').onclick=$('credits').onclick=info;
 $('modal').onclick=e=>{if(e.target===$('modal'))$('modal').close()};
 $('undo').onclick=()=>{points.pop();measure()};$('stop').onclick=stopTool;
