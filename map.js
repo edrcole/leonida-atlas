@@ -381,7 +381,7 @@ window.AtlasMap = (() => {
         pointerGPS={...p,source:e.pointerType==='touch'?'touch':'cursor'};queueGPS();
         const g=hit(p.x,p.y),nextHover=g?.members[0];
         if(nextHover===hover)return;hover=nextHover;canvas.style.cursor=pickHandler?'crosshair':g?'pointer':'grab';
-        canvas.title=g?(g.members.length===1?hover.title:g.members.length+' spot · Seleziona per ingrandire'):'';redraw();return;
+        canvas.title=g?(g.members.length===1?hover.title:g.members.length+atlasText(' spot · Seleziona per ingrandire', ' locations · Select to zoom in')):'';redraw();return;
       }
       pointerGPS=null;queueGPS();const last=fingers.get(e.pointerId);fingers.set(e.pointerId,p);
       if(fingers.size===2){
@@ -416,7 +416,7 @@ window.AtlasMap = (() => {
   return {
     init(el,onSelect,onMove){
       if(initialized)return;initialized=true;host=el;select=onSelect;move=onMove;
-      canvas=document.createElement('canvas');canvas.tabIndex=0;canvas.setAttribute('aria-label','Mappa di Leonida. Usa le frecce per spostarti, più e meno per lo zoom. Seleziona gli spot anche dalla lista.');
+      canvas=document.createElement('canvas');canvas.tabIndex=0;canvas.setAttribute('aria-label',atlasText('Mappa di Leonida. Usa le frecce per spostarti, più e meno per lo zoom. Seleziona gli spot anche dalla lista.', 'Leonida map. Use the arrow keys to pan and plus or minus to zoom. You can also select locations from the list.'));
       canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;touch-action:none;cursor:grab;display:block;';
       if(getComputedStyle(host).position==='static')host.style.position='relative';
       terrainCanvas=document.createElement('canvas');terrainCanvas.setAttribute('aria-hidden','true');

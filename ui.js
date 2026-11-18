@@ -3,31 +3,31 @@ const paths={map:'m3 5 6-2 6 2 6-2v16l-6 2-6-2-6 2z M9 3v16 M15 5v16',grid:'M3 3
 Object.assign(paths,{star:'m12 2 3 6.5 7 1-5 5 1 7-6-3.4-6 3.4 1-7-5-5 7-1z',tick:'M12 2a10 10 0 1 0 .01 0 M7 12l3 3 7-7',ruler:'m2 8 6-6 14 14-6 6z M7 7l2-2m2 6 2-2m2 6 2-2',navigation:'m3 10 18-7-7 18-3-8z',pinplus:'M13 21s-9-8-9-13a7 7 0 1 1 14 0 M11 6a2 2 0 1 0 .01 0 M18 13v8m-4-4h8',spark:'m12 4 1.8 6.2L20 12l-6.2 1.8L12 20l-1.8-6.2L4 12l6.2-1.8z M20 2v4m-2-2h4',copy:'M8 8h12v13H8z M5 16H3V3h12v2'});
 const icon=k=>'<svg aria-hidden="true" viewBox="0 0 24 24"><path d="'+paths[k]+'"/></svg>';
 document.querySelectorAll('[data-i]').forEach(el=>el.outerHTML=icon(el.dataset.i));
-const $=id=>document.getElementById(id), spots=window.VICE_ATLAS_SPOTS, fmt=n=>String(n).replace(/\B(?=(\d{3})+(?!\d))/g,'.');
-const meta={all:['Tutti gli spot','layers','#ffa989'],landmark:['Landmark ed edifici','building','#f6a5c2'],enterable:['Interni esplorabili','door','#f8a675'],shop:['Negozi e armi','bag','#a6e0c8'],transit:['Trasporti e ponti','plane','#8ecfe5'],hotel:['Hotel e resort','bed','#f0b5df'],nightlife:['Nightlife e club','glass','#de9de4'],trailer:['Spot dei trailer','film','#f5aa9d'],screenshot:['Screenshot Rockstar','camera','#eac989'],leak:['Avvistamenti','eye','#cab4e7']};
+const $=id=>document.getElementById(id), spots=window.VICE_ATLAS_SPOTS, fmt=n=>atlasNumbers.format(n);
+const meta={all:[atlasText('Tutti gli spot', 'All locations'),'layers','#ffa989'],landmark:[atlasText('Landmark ed edifici', 'Landmarks and buildings'),'building','#f6a5c2'],enterable:[atlasText('Interni esplorabili', 'Enterable interiors'),'door','#f8a675'],shop:[atlasText('Negozi e armi', 'Shops and weapons'),'bag','#a6e0c8'],transit:[atlasText('Trasporti e ponti', 'Transport and bridges'),'plane','#8ecfe5'],hotel:[atlasText('Hotel e resort', 'Hotels and resorts'),'bed','#f0b5df'],nightlife:[atlasText('Nightlife e club', 'Nightlife and clubs'),'glass','#de9de4'],trailer:[atlasText('Spot dei trailer', 'Trailer locations'),'film','#f5aa9d'],screenshot:[atlasText('Screenshot Rockstar', 'Rockstar screenshots'),'camera','#eac989'],leak:[atlasText('Avvistamenti', 'Sightings'),'eye','#cab4e7']};
 
 const TELEPORT_REGIONS = [
-        { id: 'ocean_beach', name: 'Ocean Beach & Ocean Drive', sub: 'Art Deco District, Hotel & Neon', emoji: '🌴', lat: 699, lng: 1744, zoom: 5 },
-        { id: 'vice_beach', name: 'Vice Beach & Washington', sub: 'Spiagge Tropicali & Resort', emoji: '🏖️', lat: 1450, lng: 1700, zoom: 5 },
-        { id: 'downtown', name: 'Downtown Vice City', sub: 'Grattacieli, Finanza & Autostrade', emoji: '🏙️', lat: -102, lng: -662, zoom: 5 },
-        { id: 'crosstown', name: 'Crosstown & Little Haiti', sub: 'Cuore Urbano di Vice City', emoji: '🌺', lat: 1157, lng: -636, zoom: 5 },
-        { id: 'vcia', name: 'Vice City Int. Airport (VCIA)', sub: 'Terminal Aerei & Hangar', emoji: '✈️', lat: -706, lng: -2330, zoom: 5 },
-        { id: 'leonida_keys', name: 'Leonida Keys & Key Lento', sub: 'Arcipelago Tropicale & Ponti sul Mare', emoji: '🏝️', lat: -5893, lng: -2508, zoom: 4 },
-        { id: 'grassrivers', name: 'Grassrivers (Everglades)', sub: 'Paludi, Airboat & Alligatori', emoji: '🐊', lat: -4502, lng: -3477, zoom: 4 },
-        { id: 'port_gellhorn', name: 'Port Gellhorn', sub: 'Costa Ovest, Motel, Circuito & Porto', emoji: '⚓', lat: 3669, lng: -6549, zoom: 4 },
-        { id: 'raceway', name: 'Gellhorn Int. Raceway', sub: 'Autodromo & Pista da Corsa', emoji: '🏎️', lat: 1983, lng: -6462, zoom: 5 },
-        { id: 'ambrosia', name: 'Lake Leonida & Ambrosia', sub: 'Grande Lago Centrale & Colline', emoji: '🌅', lat: 3981, lng: -2785, zoom: 4 },
-        { id: 'hamlet', name: 'Hamlet & Homestead', sub: 'Sud Leonida & Campi Agricoli', emoji: '🌾', lat: -3193, lng: -2691, zoom: 4 }
+        { id: 'ocean_beach', name: 'Ocean Beach & Ocean Drive', sub: atlasText('Art Deco District, Hotel & Neon', 'Art Deco district, hotels and neon'), emoji: '🌴', lat: 699, lng: 1744, zoom: 5 },
+        { id: 'vice_beach', name: 'Vice Beach & Washington', sub: atlasText('Spiagge Tropicali & Resort', 'Tropical beaches and resorts'), emoji: '🏖️', lat: 1450, lng: 1700, zoom: 5 },
+        { id: 'downtown', name: 'Downtown Vice City', sub: atlasText('Grattacieli, Finanza & Autostrade', 'Skyscrapers, finance and highways'), emoji: '🏙️', lat: -102, lng: -662, zoom: 5 },
+        { id: 'crosstown', name: 'Crosstown & Little Haiti', sub: atlasText('Cuore Urbano di Vice City', 'Urban heart of Vice City'), emoji: '🌺', lat: 1157, lng: -636, zoom: 5 },
+        { id: 'vcia', name: 'Vice City Int. Airport (VCIA)', sub: atlasText('Terminal Aerei & Hangar', 'Airport terminals and hangars'), emoji: '✈️', lat: -706, lng: -2330, zoom: 5 },
+        { id: 'leonida_keys', name: 'Leonida Keys & Key Lento', sub: atlasText('Arcipelago Tropicale & Ponti sul Mare', 'Tropical islands and ocean bridges'), emoji: '🏝️', lat: -5893, lng: -2508, zoom: 4 },
+        { id: 'grassrivers', name: 'Grassrivers (Everglades)', sub: atlasText('Paludi, Airboat & Alligatori', 'Wetlands, airboats and alligators'), emoji: '🐊', lat: -4502, lng: -3477, zoom: 4 },
+        { id: 'port_gellhorn', name: 'Port Gellhorn', sub: atlasText('Costa Ovest, Motel, Circuito & Porto', 'West coast, motels, racetrack and port'), emoji: '⚓', lat: 3669, lng: -6549, zoom: 4 },
+        { id: 'raceway', name: 'Gellhorn Int. Raceway', sub: atlasText('Autodromo & Pista da Corsa', 'Speedway and racing circuit'), emoji: '🏎️', lat: 1983, lng: -6462, zoom: 5 },
+        { id: 'ambrosia', name: 'Lake Leonida & Ambrosia', sub: atlasText('Grande Lago Centrale & Colline', 'Central lake and rolling hills'), emoji: '🌅', lat: 3981, lng: -2785, zoom: 4 },
+        { id: 'hamlet', name: 'Hamlet & Homestead', sub: atlasText('Sud Leonida & Campi Agricoli', 'Southern Leonida and farmland'), emoji: '🌾', lat: -3193, lng: -2691, zoom: 4 }
     ];
-meta.custom=['Spot personali','pinplus','#ff97ca'];
+meta.custom=[atlasText('Spot personali', 'Personal locations'),'pinplus','#ff97ca'];
 const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const txt=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
 function readList(key){try{const a=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(a)?a:[]}catch{return []}}
-function persist(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch{toast('Memoria locale non disponibile');return false}}
+function persist(key,value){try{localStorage.setItem(key,JSON.stringify(value));return true}catch{toast(atlasText('Memoria locale non disponibile', 'Local storage unavailable'));return false}}
 const saveIds=new Set(readList('atlasBookmarks')),foundIds=new Set(readList('atlasFound'));
 const personal=readList('atlasCustomSpots').filter(s=>s?.category==='custom'&&Number.isFinite(s.lng)&&Number.isFinite(s.lat));
 const records=[...spots,...personal], index=new Map(),counts={all:0};
-meta.sport=['Impianti sportivi','target','#a3e3b4'];
+meta.sport=[atlasText('Impianti sportivi', 'Sports venues'),'target','#a3e3b4'];
 const categoryKeys=['landmark','enterable','hotel','nightlife','shop','trailer','screenshot','transit','sport','leak'];
 const sportTags=new Set(['#tennis','#volleyball','#golf','#gym','#racetrack']);
 const recordCategory=new Map();
@@ -77,31 +77,31 @@ function refresh(){
     const exact=current.find(s=>txt(s.id)===query);
     current=exact?[exact]:current.map(s=>({s,rank:relevance(s,query)})).sort((a,b)=>a.rank-b.rank).map(hit=>hit.s);
   }
-  AtlasMap.setSpots(current);$('visible').textContent=fmt(current.length)+' spot attivi';$('foundCount').textContent=foundIds.size+' / '+fmt(records.length);categories();
+  AtlasMap.setSpots(current);$('visible').textContent=fmt(current.length)+atlasText(' spot attivi', ' active locations');$('foundCount').textContent=foundIds.size+' / '+fmt(records.length);categories();
   document.querySelectorAll('[data-scope]').forEach(b=>{const on=scope===b.dataset.scope;b.classList.toggle('active',on);b.setAttribute('aria-pressed',on)});
   if(selected&&!current.includes(selected))selected=null;
   if(selected)detail(selected);else if(exploring)list();else hideDrawer();
 }
 function showDrawer(title,type){if(panel.classList.contains('floatingPanel'))closeExplorer();$('drawer').hidden=false;$('drawer').className=type;$('drawerTitle').textContent=title}
 function list(){
-  showDrawer(({saved:'Preferiti',found:'Trovati',photo:'Con foto'})[scope]||'Esplora gli spot','results');
+  showDrawer(({saved:atlasText('Preferiti', 'Favorites'),found:atlasText('Trovati', 'Found'),photo:atlasText('Con foto', 'With photos')})[scope]||atlasText('Esplora gli spot', 'Explore locations'),'results');
   const area=$('drawerBody');
   const shared=document.querySelector('.panel .search')||document.querySelector('#drawerBody .search');
   if(shared && area.contains(shared))document.querySelector('.explorehead').after(shared);
-  area.innerHTML='<div class="resultCount">'+fmt(current.length)+' spot</div><div id="resultRows"></div>';
+  area.innerHTML='<div class="resultCount">'+fmt(current.length)+atlasText(' spot</div><div id="resultRows"></div>', ' locations</div><div id="resultRows"></div>');
   if(scope||document.body.classList.contains('fullMap')||window.fromLens)area.prepend(shared);
   const term=searchTerm();
   const zones=term&&!scope?TELEPORT_REGIONS.filter(r=>txt(r.name).includes(term)):[];
   if(zones.length){
     const group=document.createElement('div');
     group.className='searchZones';
-    group.innerHTML=zones.map(r=>'<button class="row" data-region="'+r.id+'">'+icon('navigation')+'<span>'+esc(r.name)+'<small>Zona · Inquadra sulla mappa</small></span>'+icon('next')+'</button>').join('');
+    group.innerHTML=zones.map(r=>'<button class="row" data-region="'+r.id+'">'+icon('navigation')+'<span>'+esc(r.name)+atlasText('<small>Zona · Inquadra sulla mappa</small></span>', '<small>Region · Show on map</small></span>')+icon('next')+'</button>').join('');
     area.querySelector('.resultCount').before(group);
   }
   const rows=$('resultRows');
-  function page(start){rows.querySelector('.more')?.remove();rows.insertAdjacentHTML('beforeend',current.slice(start,limit).map(s=>'<button class="row" data-spot="'+esc(s.id)+'" style="--c:'+meta[s.category][2]+'">'+icon(meta[s.category][1])+'<span>'+esc(s.title)+'<small>'+esc(s.district||'Leonida')+' · #'+esc(s.id)+'</small></span>'+icon('next')+'</button>').join(''));if(current.length>limit){const more=document.createElement('button');more.className='action more';more.textContent='Altri risultati';more.onclick=()=>{const start=limit;limit+=35;page(start)};rows.append(more)}}
+  function page(start){rows.querySelector('.more')?.remove();rows.insertAdjacentHTML('beforeend',current.slice(start,limit).map(s=>'<button class="row" data-spot="'+esc(s.id)+'" style="--c:'+meta[s.category][2]+'">'+icon(meta[s.category][1])+'<span>'+esc(s.title)+'<small>'+esc(s.district||'Leonida')+' · #'+esc(s.id)+'</small></span>'+icon('next')+'</button>').join(''));if(current.length>limit){const more=document.createElement('button');more.className='action more';more.textContent=atlasText('Altri risultati', 'More results');more.onclick=()=>{const start=limit;limit+=35;page(start)};rows.append(more)}}
   page(0);if(matchMedia('(max-width:680px)').matches)$('drawer').scrollTop=$('drawer').scrollHeight;
-  if(!current.length)rows.innerHTML='<p class="empty">'+(scope==='saved'?'Tocca la stella in una scheda per aggiungere uno spot ai preferiti.':scope==='found'?'Segna uno spot come trovato dalla sua scheda.':'Nessuno spot corrisponde ai filtri scelti.')+'</p>';
+  if(!current.length)rows.innerHTML='<p class="empty">'+(scope==='saved'?atlasText('Tocca la stella in una scheda per aggiungere uno spot ai preferiti.', 'Tap the star on a location card to add it to your favorites.'):scope==='found'?atlasText('Segna uno spot come trovato dalla sua scheda.', 'Mark a location as found on its card.'):atlasText('Nessuno spot corrisponde ai filtri scelti.', 'No locations match these filters.'))+'</p>';
 }
 function toggleMembership(s,ids,key){const next=new Set(ids);if(next.has(s.id))next.delete(s.id);else next.add(s.id);if(!persist(key,[...next]))return;ids.clear();next.forEach(id=>ids.add(id));refresh()}
 function detailsAction(id,label,glyph,on){return '<button id="'+id+'" aria-pressed="'+on+'">'+icon(glyph)+' '+label+'</button>'}
@@ -110,42 +110,42 @@ function detail(s){restoreSearch();
   const hasCoords=Array.isArray(s.rlCoords)&&s.rlCoords.length===2&&s.rlCoords.every(Number.isFinite);
   const street=hasCoords?'https://www.google.com/maps/@?api=1&map_action=pano&viewpoint='+encodeURIComponent(s.rlCoords.join(',')):'';
   const maps=s.rlAddress?'https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(s.rlAddress):'';
-  $('drawerBody').innerHTML='<div class="mediaWrap"><div id="gallery"></div><div class="badges"><span style="--badge:'+color+'">'+icon(ic)+esc(category)+'</span><span>#'+esc(s.id)+'</span></div></div><div class="spotDetails"><div class="label">'+esc(s.district||'Leonida')+'</div><h3>'+esc(s.title)+'</h3><div class="tags">'+(s.tags||[]).map(t=>'<span>'+esc(t)+'</span>').join('')+'</div><div class="facts"><button id="copyCoords" title="Copia coordinate"><small>Coordinate in-game</small><span>'+esc(coord)+'</span>'+icon('copy')+'</button><div><small>Fonte mapping</small><span>'+esc(s.source||'GTADB / Yanis V17')+'</span></div></div>'+
-  (street||maps?'<div class="counterpart"><small>Controparte reale · Florida</small>'+esc(s.rlAddress||s.rlCoords.join(', '))+'<a target="_blank" rel="noopener" href="'+esc(street||maps)+'">'+(street?'Apri in Google Street View':'Cerca in Google Maps')+' ↗</a></div>':'')+
-  '<div class="spotActions">'+detailsAction('starSpot','Preferito','star',saveIds.has(s.id))+detailsAction('foundSpot','Trovato','tick',foundIds.has(s.id))+'<button id="zoomSpot">'+icon('target')+' Zoom</button></div></div>';
+  $('drawerBody').innerHTML='<div class="mediaWrap"><div id="gallery"></div><div class="badges"><span style="--badge:'+color+'">'+icon(ic)+esc(category)+'</span><span>#'+esc(s.id)+'</span></div></div><div class="spotDetails"><div class="label">'+esc(s.district||'Leonida')+'</div><h3>'+esc(s.title)+'</h3><div class="tags">'+(s.tags||[]).map(t=>'<span>'+esc(t)+'</span>').join('')+atlasText('</div><div class="facts"><button id="copyCoords" title="Copia coordinate"><small>Coordinate in-game</small><span>', '</div><div class="facts"><button id="copyCoords" title="Copy coordinates"><small>In-game coordinates</small><span>')+esc(coord)+'</span>'+icon('copy')+atlasText('</button><div><small>Fonte mapping</small><span>', '</button><div><small>Mapping source</small><span>')+esc(s.source==='Spot personale'?atlasText('Spot personale','Personal location'):s.source||'GTADB / Yanis V17')+'</span></div></div>'+
+  (street||maps?atlasText('<div class="counterpart"><small>Controparte reale · Florida</small>', '<div class="counterpart"><small>Real-world counterpart · Florida</small>')+esc(s.rlAddress||s.rlCoords.join(', '))+'<a target="_blank" rel="noopener" href="'+esc(street||maps)+'">'+(street?atlasText('Apri in Google Street View', 'Open in Google Street View'):atlasText('Cerca in Google Maps', 'Search Google Maps'))+' ↗</a></div>':'')+
+  '<div class="spotActions">'+detailsAction('starSpot',atlasText('Preferito', 'Favorite'),'star',saveIds.has(s.id))+detailsAction('foundSpot',atlasText('Trovato', 'Found'),'tick',foundIds.has(s.id))+'<button id="zoomSpot">'+icon('target')+' Zoom</button></div></div>';
   mountGallery(s);
   $('starSpot').onclick=()=>toggleMembership(s,saveIds,'atlasBookmarks');$('foundSpot').onclick=()=>toggleMembership(s,foundIds,'atlasFound');
   $('zoomSpot').onclick=()=>goSpot(s);
-  $('copyCoords').onclick=async()=>{try{await navigator.clipboard.writeText(coord);toast('Coordinate copiate')}catch{modal('Copia coordinate','<input class="field" readonly id="manualCoords">');$('manualCoords').value=coord;$('manualCoords').select()}};
+  $('copyCoords').onclick=async()=>{try{await navigator.clipboard.writeText(coord);toast(atlasText('Coordinate copiate', 'Coordinates copied'))}catch{modal(atlasText('Copia coordinate', 'Copy coordinates'),'<input class="field" readonly id="manualCoords">');$('manualCoords').value=coord;$('manualCoords').select()}};
 }
 function goSpot(s){hideDrawer();AtlasMap.focus(s);revealMap()}
 function revealMap(){if(matchMedia('(max-width:680px)').matches&&!$('mapframe').classList.contains('expanded'))$('mapframe').scrollIntoView({block:'start',behavior:'instant'})}
 function setTheme(t){theme=t;document.body.classList.toggle('night',t==='night');document.querySelectorAll('[data-theme]').forEach(b=>{b.classList.toggle('selected',b.dataset.theme===t);b.setAttribute('aria-pressed',b.dataset.theme===t)});AtlasMap.theme(t);try{localStorage.atlasTheme=t}catch{}}
-function info(){modal('Crediti e fonti','<p>Leonida Atlas raccoglie i '+fmt(spots.length)+' spot del progetto ERACLE. La cartografia Yanis V17 è una ricostruzione della community. Le posizioni possono essere approssimative.</p><p><a href="https://map.gtadb.org" target="_blank" rel="noopener">Yanis V17 · GTADB e collaboratori ↗</a><br><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 ↗</a> · Cartografia ritagliata e ricolorata.</p><p><a href="https://edrcole.github.io/gtavimap/" target="_blank" rel="noopener">Atlante originale di ERACLE ↗</a></p><p>GTA VI e il logo appartengono a Rockstar Games. Sfondi fotografici da Unsplash.</p>')}
+function info(){modal(atlasText('Crediti e fonti', 'Credits and sources'),atlasText('<p>Leonida Sosa raccoglie i ', '<p>Leonida Sosa features ')+fmt(spots.length)+atlasText(' spot del progetto ERACLE. La cartografia Yanis V17 è una ricostruzione della community. Le posizioni possono essere approssimative.</p><p><a href="https://map.gtadb.org" target="_blank" rel="noopener">Yanis V17 · GTADB e collaboratori ↗</a><br><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 ↗</a> · Cartografia ritagliata e ricolorata.</p><p><a href="https://edrcole.github.io/gtavimap/" target="_blank" rel="noopener">Atlante originale di ERACLE ↗</a></p><p>GTA VI e il logo appartengono a Rockstar Games. Sfondi fotografici da Unsplash.</p>', ' locations from the ERACLE project. Yanis V17 is a community reconstruction. Locations may be approximate.</p><p><a href="https://map.gtadb.org" target="_blank" rel="noopener">Yanis V17 · GTADB and contributors ↗</a><br><a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0 ↗</a> · Map cropped and recolored.</p><p><a href="https://edrcole.github.io/gtavimap/" target="_blank" rel="noopener">Original ERACLE atlas ↗</a></p><p>GTA VI and its logo belong to Rockstar Games. Background photography from Unsplash.</p>'))}
 function toast(msg){$('toast').textContent=msg;$('toast').classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').classList.remove('show'),3800)}
 function mountGallery(s){AtlasPhotos.mount($('gallery'),s,()=>goSpot(s))}
 function stopTool(){mode='';points=[];AtlasMap.setPickHandler(null);AtlasMap.setRuler([]);$('toolBanner').hidden=true;document.querySelectorAll('[data-tool]').forEach(b=>b.classList.remove('using'))}
 function measure(){
   AtlasMap.setRuler(points);
   const meters=points.reduce((sum,p,i)=>i?sum+Math.hypot(p.lat-points[i-1].lat,p.lng-points[i-1].lng):0,0);
-  $('toolText').textContent=points.length>1?'≈ '+(meters/1000).toLocaleString('it-IT',{minimumFractionDigits:2,maximumFractionDigits:2})+' km · '+points.length+' punti':points.length?'Tocca il punto di arrivo':'Tocca il primo punto sulla mappa';
+  $('toolText').textContent=points.length>1?'≈ '+(meters/1000).toLocaleString(document.documentElement.lang,{minimumFractionDigits:2,maximumFractionDigits:2})+' km · '+points.length+atlasText(' punti', ' points'):points.length?atlasText('Tocca il punto di arrivo', 'Tap the end point'):atlasText('Tocca il primo punto sulla mappa', 'Tap the first point on the map');
   $('undo').hidden=!points.length;
 }
 function newSpot(point){
   stopTool();
-  modal('Crea nuovo spot','<form id="newForm"><label class="formLabel">Nome dello spot<input class="field" id="spotName" required maxlength="100" placeholder="Es. Tramonto sul porto"></label><label class="formLabel">Zona o città<input class="field" id="spotZone" maxlength="100" placeholder="Facoltativo"></label><p class="coordsLine">X '+point.lng.toFixed(2)+' · Y '+point.lat.toFixed(2)+'</p><button class="cta">Aggiungi alla mappa</button></form>');
+  modal(atlasText('Crea nuovo spot', 'Add a location'),atlasText('<form id="newForm"><label class="formLabel">Nome dello spot<input class="field" id="spotName" required maxlength="100" placeholder="Es. Tramonto sul porto"></label><label class="formLabel">Zona o città<input class="field" id="spotZone" maxlength="100" placeholder="Facoltativo"></label><p class="coordsLine">X ', '<form id="newForm"><label class="formLabel">Location name<input class="field" id="spotName" required maxlength="100" placeholder="e.g. Sunset at the harbor"></label><label class="formLabel">Region or city<input class="field" id="spotZone" maxlength="100" placeholder="Optional"></label><p class="coordsLine">X ')+point.lng.toFixed(2)+' · Y '+point.lat.toFixed(2)+atlasText('</p><button class="cta">Aggiungi alla mappa</button></form>', '</p><button class="cta">Add to map</button></form>'));
   $('spotName').focus();$('newForm').onsubmit=e=>{e.preventDefault();const title=$('spotName').value.trim();if(!title){$('spotName').focus();return}
-    const s={id:'P-'+crypto.randomUUID(),category:'custom',title,district:$('spotZone').value.trim()||'Leonida',tags:[],source:'Spot personale',lng:+point.lng.toFixed(2),lat:+point.lat.toFixed(2)};
-    if(!persist('atlasCustomSpots',[...personal,s]))return;personal.push(s);saveIds.add(s.id);persist('atlasBookmarks',[...saveIds]);records.push(s);indexSpot(s);$('modal').close();activeCategories=new Set(categoryKeys);scope='';$('query').value='';exploring=false;selected=s;refresh();AtlasMap.focus(s);toast('Spot personale aggiunto')};
+    const s={id:'P-'+crypto.randomUUID(),category:'custom',title,district:$('spotZone').value.trim()||'Leonida',tags:[],source:atlasText('Spot personale', 'Personal location'),lng:+point.lng.toFixed(2),lat:+point.lat.toFixed(2)};
+    if(!persist('atlasCustomSpots',[...personal,s]))return;personal.push(s);saveIds.add(s.id);persist('atlasBookmarks',[...saveIds]);records.push(s);indexSpot(s);$('modal').close();activeCategories=new Set(categoryKeys);scope='';$('query').value='';exploring=false;selected=s;refresh();AtlasMap.focus(s);toast(atlasText('Spot personale aggiunto', 'Personal location added'))};
 }
 function startTool(tool){
   const was=mode;stopTool();if(was===tool)return;
-  if(tool==='zones'){modal('Zone e città',TELEPORT_REGIONS.map((r,i)=>'<button class="zone" data-zone="'+i+'"><span>'+r.emoji+'</span><span>'+esc(r.name)+'<small>'+esc(r.sub)+'</small></span>'+icon('next')+'</button>').join(''));return}
-  if(tool==='random'){if(!current.length){toast('Nessuno spot tra i filtri attivi');return}const s=current[Math.floor(Math.random()*current.length)];AtlasMap.focus(s);detail(s);revealMap();return}
+  if(tool==='zones'){modal(atlasText('Zone e città', 'Regions and cities'),TELEPORT_REGIONS.map((r,i)=>'<button class="zone" data-zone="'+i+'"><span>'+r.emoji+'</span><span>'+esc(r.name)+'<small>'+esc(r.sub)+'</small></span>'+icon('next')+'</button>').join(''));return}
+  if(tool==='random'){if(!current.length){toast(atlasText('Nessuno spot tra i filtri attivi', 'No locations match the active filters'));return}const s=current[Math.floor(Math.random()*current.length)];AtlasMap.focus(s);detail(s);revealMap();return}
   hideDrawer();mode=tool;revealMap();$('toolBanner').hidden=false;document.querySelector('[data-tool="'+tool+'"]').classList.add('using');
-  if(tool==='ruler'){measure();AtlasMap.setPickHandler(p=>{points.push(p);measure()})}else{$('undo').hidden=true;$('toolText').textContent='Tocca la posizione del nuovo spot';AtlasMap.setPickHandler(newSpot)}
+  if(tool==='ruler'){measure();AtlasMap.setPickHandler(p=>{points.push(p);measure()})}else{$('undo').hidden=true;$('toolText').textContent=atlasText('Tocca la posizione del nuovo spot', 'Tap the map to place your location');AtlasMap.setPickHandler(newSpot)}
 }
-function updateSearch(value){$('query').value=value;if(txt(value)==='hesoyam'){toast('✦ HESOYAM · Bonus Vice City sbloccato');$('query').value='';setTheme(theme==='night'?'sunset':'night')}selected=null;limit=35;exploring=true;const typing=document.activeElement===$('query');refresh();if(typing)$('query').focus({preventScroll:true})}
+function updateSearch(value){$('query').value=value;if(txt(value)==='hesoyam'){toast(atlasText('✦ HESOYAM · Bonus Vice City sbloccato', '✦ HESOYAM · Vice City bonus unlocked'));$('query').value='';setTheme(theme==='night'?'sunset':'night')}selected=null;limit=35;exploring=true;const typing=document.activeElement===$('query');refresh();if(typing)$('query').focus({preventScroll:true})}
 $('query').oninput=e=>updateSearch(e.target.value);
 $('query').onfocus=()=>{
   const floating=panel.classList.contains('floatingPanel');
@@ -184,14 +184,14 @@ $('drawerClose').onclick=closeDrawer;
 $('plus').onclick=()=>AtlasMap.zoom(1);$('minus').onclick=()=>AtlasMap.zoom(-1);$('reset').onclick=()=>AtlasMap.reset();
 function expand(){const el=$('mapframe'),first=el.getBoundingClientRect(),enabled=el.classList.toggle('expanded');
   document.body.classList.toggle('fullMap',enabled);(enabled?el:document.querySelector('aside')).append($('dock'));
-  $('expand').setAttribute('aria-label',enabled?'Riduci la mappa':'Espandi la mappa');AtlasMap.resize();
+  $('expand').setAttribute('aria-label',enabled?atlasText('Riduci la mappa', 'Collapse map'):atlasText('Espandi la mappa', 'Expand map'));AtlasMap.resize();
   const nav=document.querySelector('nav');if(enabled)el.append(nav);else $('info').before(nav);
   if(!enabled){closeExplorer();placeHeading()}
   const last=el.getBoundingClientRect();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)el.animate([{transformOrigin:'top left',transform:'translate('+ (first.x-last.x)+'px,'+(first.y-last.y)+'px) scale('+first.width/last.width+','+first.height/last.height+')'},{transformOrigin:'top left',transform:'none'}],{duration:390,easing:'cubic-bezier(.22,1,.36,1)'});
 }
 $('expand').onclick=expand;
 document.addEventListener('keydown',e=>{if(document.querySelector('dialog[open]'))return;if(e.key==='/'&&!e.target.matches('input,textarea')){e.preventDefault();if(matchMedia('(max-width:680px)').matches)$('mobileSearch').click();else $('query').focus()}if(e.key==='Escape'){if(mode)stopTool();else if(!$('drawer').hidden)closeDrawer();else if($('mapframe').classList.contains('expanded'))expand()}});
-let taps=0,last=0;$('logo').onclick=()=>{if(Date.now()-last>1300)taps=0;last=Date.now();if(++taps===5){taps=0;document.body.classList.add('wanted');$('wantedStars').hidden=false;toast('Livello ricercato massimo');setTimeout(()=>{document.body.classList.remove('wanted');$('wantedStars').hidden=true},8000)}};
+let taps=0,last=0;$('logo').onclick=()=>{if(Date.now()-last>1300)taps=0;last=Date.now();if(++taps===5){taps=0;document.body.classList.add('wanted');$('wantedStars').hidden=false;toast(atlasText('Livello ricercato massimo', 'Maximum wanted level'));setTimeout(()=>{document.body.classList.remove('wanted');$('wantedStars').hidden=true},8000)}};
 AtlasMap.init($('carto'),detail,()=>{});
 AtlasMap.setGPSHandler(({lat,lng,z})=>{
   const coords='X '+Math.round(lng)+' · Y '+Math.round(lat);

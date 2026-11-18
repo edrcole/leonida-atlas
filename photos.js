@@ -43,8 +43,8 @@ window.AtlasPhotos = (() => {
   }
   function fallback(spot, kind) {
     const note = make('div', 'ap-error');
-    note.append(make('span', '', 'Immagine non disponibile'));
-    const link = make('a', '', 'Verifica sulla fonte ↗');
+    note.append(make('span', '', atlasText('Immagine non disponibile', 'Image unavailable')));
+    const link = make('a', '', atlasText('Verifica sulla fonte ↗', 'View original source ↗'));
     link.href = url(spot, kind);
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
@@ -54,7 +54,7 @@ window.AtlasPhotos = (() => {
   function picker(spot, selected, select) {
     const choices = make('div', 'ap-switch');
     choices.setAttribute('role', 'group');
-    choices.setAttribute('aria-label', 'Tipo di foto');
+    choices.setAttribute('aria-label', atlasText('Tipo di foto', 'Photo type'));
     for (const k of available(spot)) {
       const item = button('ap-option', views[k].label, () => select(k));
       item.setAttribute('aria-pressed', String(k === selected));
@@ -72,7 +72,7 @@ window.AtlasPhotos = (() => {
     dialog.setAttribute('aria-label', name);
     const head = make('div', 'ap-light-head');
     const close = button('ap-close', '×', () => dialog.close());
-    close.setAttribute('aria-label', 'Chiudi foto');
+    close.setAttribute('aria-label', atlasText('Chiudi foto', 'Close photo'));
     close.autofocus = true;
     head.append(make('h2', '', name), close);
     const stage = make('div', 'ap-light-stage');
@@ -84,7 +84,7 @@ window.AtlasPhotos = (() => {
       stage.replaceChildren(image(spot, k, () => {if (kind === k) stage.replaceChildren(fallback(spot,k));}, false));
     }
     foot.append(picker(spot, kind, show));
-    if (onOpenSpot) foot.append(button('ap-go', 'Vai allo spot sulla mappa', () => {dialog.close(); onOpenSpot(spot);}));
+    if (onOpenSpot) foot.append(button('ap-go', atlasText('Vai allo spot sulla mappa', 'Show location on map'), () => {dialog.close(); onOpenSpot(spot);}));
     dialog.append(head, stage, foot);
     document.body.append(dialog);
     dialog.addEventListener('click', event => {
@@ -105,7 +105,7 @@ window.AtlasPhotos = (() => {
   function thumbnail(spot, kind, onOpenSpot, lazy) {
     const stage = make('div', 'ap-frame');
     const open = button('ap-preview', '', () => viewer(spot,kind,onOpenSpot));
-    open.setAttribute('aria-label', 'Ingrandisci ' + views[kind].label.toLowerCase() + ' · ' + spot.title);
+    open.setAttribute('aria-label', atlasText('Ingrandisci ', 'Enlarge ') + views[kind].label.toLowerCase() + ' · ' + spot.title);
     const mark = make('span', 'ap-enlarge', '⛶');
     mark.setAttribute('aria-hidden', 'true');
     open.append(image(spot, kind, () => stage.replaceChildren(fallback(spot,kind)), lazy),mark);
@@ -115,7 +115,7 @@ window.AtlasPhotos = (() => {
   function mount(host, spot, onOpenSpot) {
     const kinds = available(spot);
     if (!kinds.length) {
-      host.replaceChildren(make('p', 'ap-empty', 'Nessuna foto in archivio per questo spot.'));
+      host.replaceChildren(make('p', 'ap-empty', atlasText('Nessuna foto in archivio per questo spot.', 'No photos available for this location.')));
       return;
     }
     const box = make('div', 'ap-detail');
@@ -132,9 +132,9 @@ window.AtlasPhotos = (() => {
     const photos = spots.filter(s => available(s).length);
     const gallery = make('div', 'ap-grid');
     let shown = 0;
-    const loader = button('ap-more', 'Mostra altre foto', () => addPage(true));
+    const loader = button('ap-more', atlasText('Mostra altre foto', 'Show more photos'), () => addPage(true));
     host.replaceChildren(gallery,loader);
-    if (!photos.length) gallery.append(make('p', 'ap-empty', 'Nessuna foto per questi spot.'));
+    if (!photos.length) gallery.append(make('p', 'ap-empty', atlasText('Nessuna foto per questi spot.', 'No photos available for these locations.')));
     function addPage(moveFocus) {
       const oldCount = shown;
       for (const s of photos.slice(shown,shown + 18)) {
@@ -148,7 +148,7 @@ window.AtlasPhotos = (() => {
         const title = make('strong','ap-title',s.title);
         const label = make('small','ap-card-label',[s.district,'#'+s.id].filter(Boolean).join(' · '));
         card.append(stage,picker(s,kinds[0],change),title,label);
-        if (onOpenSpot) card.append(button('ap-go','Vai allo spot sulla mappa',() => onOpenSpot(s)));
+        if (onOpenSpot) card.append(button('ap-go',atlasText('Vai allo spot sulla mappa', 'Show location on map'),() => onOpenSpot(s)));
         gallery.append(card);
         change(kinds[0]);
         shown++;
