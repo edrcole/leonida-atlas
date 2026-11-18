@@ -63,14 +63,22 @@ if (atlasLanguage === 'en') {
     }
   }
 }
-const languagePicker = document.getElementById('language');
-languagePicker.value = atlasLanguage;
-languagePicker.onchange = () => {
-  saveLanguage('localStorage','atlasLanguage',languagePicker.value);
-  const url = new URL(location.href);
-  url.searchParams.set('lang',languagePicker.value);
-  location.replace(url);
-};
+const languageMenu = document.getElementById('languageMenu');
+document.getElementById('languageCode').textContent = atlasLanguage.toUpperCase();
+for (const button of languageMenu.querySelectorAll('[data-lang]')) {
+  button.setAttribute('aria-pressed', String(button.dataset.lang === atlasLanguage));
+  button.onclick = () => {
+    languageMenu.open = false;
+    saveLanguage('localStorage','atlasLanguage',button.dataset.lang);
+    const url = new URL(location.href);
+    url.searchParams.set('lang',button.dataset.lang);
+    location.replace(url);
+  };
+}
+document.addEventListener('click', event => { if (!languageMenu.contains(event.target)) languageMenu.open = false; });
+languageMenu.addEventListener('keydown', event => {
+  if (event.key === 'Escape') { languageMenu.open = false; languageMenu.querySelector('summary').focus(); }
+});
 if (!validLanguage(requestedLanguage) && !validLanguage(preference) && !country) {
   fetch('https://api.country.is/', {credentials:'omit',referrerPolicy:'no-referrer',signal:AbortSignal.timeout(2500)})
     .then(response => response.ok ? response.json() : null)

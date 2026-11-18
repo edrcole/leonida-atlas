@@ -185,7 +185,7 @@ $('plus').onclick=()=>AtlasMap.zoom(1);$('minus').onclick=()=>AtlasMap.zoom(-1);
 function expand(){const el=$('mapframe'),first=el.getBoundingClientRect(),enabled=el.classList.toggle('expanded');
   document.body.classList.toggle('fullMap',enabled);(enabled?el:document.querySelector('aside')).append($('dock'));
   $('expand').setAttribute('aria-label',enabled?atlasText('Riduci la mappa', 'Collapse map'):atlasText('Espandi la mappa', 'Expand map'));AtlasMap.resize();
-  const nav=document.querySelector('nav');if(enabled)el.append(nav);else $('info').before(nav);
+  const nav=document.querySelector('nav');if(enabled)el.append(nav);else document.querySelector('.headerActions').before(nav);
   if(!enabled){closeExplorer();placeHeading()}
   const last=el.getBoundingClientRect();if(!matchMedia('(prefers-reduced-motion: reduce)').matches)el.animate([{transformOrigin:'top left',transform:'translate('+ (first.x-last.x)+'px,'+(first.y-last.y)+'px) scale('+first.width/last.width+','+first.height/last.height+')'},{transformOrigin:'top left',transform:'none'}],{duration:390,easing:'cubic-bezier(.22,1,.36,1)'});
 }
