@@ -1,0 +1,28 @@
+.ap-detail,.ap-card,.ap-lightbox{color:#fff4f3}
+.ap-detail,.ap-card{display:grid;gap:.55rem}
+.ap-detail{margin:.7rem 0}
+.ap-frame{overflow:hidden;position:relative;border:1px solid #ffffff25;border-radius:12px;background:#241d2d}
+.ap-preview{width:100%;height:100%;display:block;position:relative;border:0;padding:0;cursor:zoom-in;background:transparent}
+.ap-preview img{display:block;width:100%;height:100%;object-fit:contain}
+.ap-frame,.ap-preview{aspect-ratio:16/10}
+.ap-enlarge{position:absolute;right:.5rem;bottom:.5rem;display:grid;place-items:center;border-radius:8px;background:#151020c9;color:white;font-size:20px;line-height:1;width:30px;height:30px}
+.ap-error{min-height:100px;display:grid;align-content:center;justify-items:center;gap:.4rem;text-align:center;padding:1rem;color:#d8cdd7;font-size:.8rem}
+.ap-error a{color:#ffc2ab;text-underline-offset:3px}
+.ap-switch{display:flex;gap:.2rem;align-items:center;flex-wrap:wrap}
+.ap-option,.ap-go,.ap-more,.ap-close{color:inherit;font:inherit;cursor:pointer}
+.ap-option{padding:.39rem .63rem;border-radius:8px;font-size:.74rem;background:transparent;border:1px solid transparent;color:#d4c7d5}
+.ap-option[aria-pressed=true]{background:#ffffff14;border-color:#ffffff21;color:#ffe1d6}
+.ap-go,.ap-more{padding:.5rem .65rem;border-radius:9px;border:1px solid #ffffff22;background:#ffffff0a;color:#ffd4c3;font-size:.8rem}
+.ap-empty{font-size:.82rem;color:#cbbfce}
+.ap-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,175px),1fr));gap:1rem}
+.ap-card{align-content:start;border-radius:14px;background:#ffffff06;border:1px solid #ffffff11;padding:.6rem;min-width:0}
+.ap-title{font-size:.95rem}.ap-card-label{color:#cbbdce;font-size:.73rem}.ap-card .ap-go{justify-self:start}
+.ap-more{width:100%;margin-top:.8rem}.ap-more[hidden]{display:none}
+dialog.ap-lightbox{padding:0;position:fixed;inset:0;margin:auto;width:min(940px,94vw);max-width:94vw;max-height:94dvh;border-radius:20px;background:#211d2a;color:#fff1f5;border:1px solid #ffffff36;box-shadow:0 30px 110px #0009;overflow:auto}
+dialog.ap-lightbox::backdrop{background:#07040bdc;backdrop-filter:blur(8px)}
+.ap-light-head,.ap-light-foot{display:flex;align-items:center;justify-content:space-between;padding:.7rem 1rem;gap:1rem}
+.ap-light-head h2{font:600 clamp(16px,2.5vw,21px)/1.2 system-ui;margin:0}
+.ap-close{border:1px solid #ffffff24;border-radius:50%;background:#ffffff0e;width:38px;height:38px;flex:none;font-size:24px}
+.ap-light-stage{background:#141119;display:grid;place-items:center}
+.ap-light-stage img{display:block;object-fit:contain;max-width:100%;width:auto;height:auto;max-height:68dvh;min-height:0}
+.ap-preview:focus-visible,.ap-option:focus-visible,.ap-go:focus-visible,.ap-more:focus-visible,.ap-close:focus-visible{outline:2px solid #ffc2ae;outline-offset:-2px}
